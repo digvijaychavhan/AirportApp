@@ -1,0 +1,489 @@
+/*
+ * Screen 18 — Feedback: Scan Boarding Pass
+ * Consistent with existing M3 kiosk design tokens.
+ */
+
+/* ─── Shell ─── */
+.fs {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-background, #F7F9FC);
+  color: var(--md-sys-color-on-background, #0F172A);
+  animation: fs-fadein 220ms ease-out both;
+}
+
+@keyframes fs-fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Top App Bar ─── */
+.fs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--md-sys-color-surface, #fff);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant, #E5E7EB);
+  min-height: 72px;
+  gap: 12px;
+}
+
+.fs-bar-back {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--md-sys-color-on-surface, #0F172A);
+  flex-shrink: 0;
+  transition: background 150ms;
+}
+.fs-bar-back:hover { background: rgba(15,23,42,0.06); }
+.fs-bar-back:active { background: rgba(15,23,42,0.12); }
+.fs-bar-back .material-symbols-outlined { font-size: 24px; }
+
+.fs-bar-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.fs-bar-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface, #0F172A);
+  letter-spacing: -0.2px;
+}
+
+.fs-bar-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+}
+
+.fs-lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--md-sys-color-outline-variant, #E5E7EB);
+  background: var(--md-sys-color-surface-variant, #F1F5F9);
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: background 150ms;
+}
+.fs-lang-btn:hover { background: #E2E8F0; }
+.fs-lang-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface, #0F172A);
+  letter-spacing: 0.4px;
+}
+.fs-lang-arrow {
+  font-size: 18px;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+}
+
+/* ─── Main ─── */
+.fs-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px 20px;
+  overflow-y: auto;
+}
+
+/* ─── Card ─── */
+.fs-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--md-sys-color-surface, #fff);
+  border-radius: 20px;
+  border: 1.5px solid var(--md-sys-color-outline-variant, #E5E7EB);
+  box-shadow: 0 2px 14px rgba(11,18,32,0.07);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  animation: fs-fadein 260ms ease-out both;
+}
+
+.fs-heading {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface, #0F172A);
+  letter-spacing: -0.3px;
+  text-wrap: balance;
+}
+
+.fs-subtext {
+  margin: 0;
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+  line-height: 1.55;
+  max-width: 340px;
+  text-wrap: pretty;
+}
+
+/* ─── Scanner Frame ─── */
+.fs-frame-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 20px;
+  background: #EFF6FF;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 400ms;
+}
+
+/* Corner guides */
+.fs-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--md-sys-color-primary, #2563EB);
+  border-style: solid;
+  z-index: 2;
+  animation: fs-corner-pulse 2s ease-in-out infinite;
+}
+.fs-corner--tl { top: 10px; left: 10px; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+.fs-corner--tr { top: 10px; right: 10px; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; animation-delay: 0.25s; }
+.fs-corner--bl { bottom: 10px; left: 10px; border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; animation-delay: 0.5s; }
+.fs-corner--br { bottom: 10px; right: 10px; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; animation-delay: 0.75s; }
+
+@keyframes fs-corner-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+/* QR illustration */
+.fs-qr-illus {
+  position: relative;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+/* Scanning beam */
+.fs-beam {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--md-sys-color-primary, #2563EB), transparent);
+  box-shadow: 0 0 12px rgba(37,99,235,0.60);
+  z-index: 3;
+  animation: fs-scan 1.8s ease-in-out infinite;
+}
+
+@keyframes fs-scan {
+  0%   { top: 10px;  opacity: 0.6; }
+  50%  { top: 220px; opacity: 1; }
+  100% { top: 10px;  opacity: 0.6; }
+}
+
+/* Success state */
+.fs-frame-wrap--success {
+  background: #F0FDF4;
+}
+
+.fs-success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: fs-fadein 300ms ease-out both;
+}
+
+.fs-success-ring {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: #DCFCE7;
+  border: 3px solid #22C55E;
+  display: grid;
+  place-items: center;
+  animation: fs-success-pop 400ms cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow: 0 0 0 8px rgba(34,197,94,0.12);
+}
+
+@keyframes fs-success-pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.fs-success-icon {
+  font-size: 52px;
+  color: #22C55E;
+  font-variation-settings: 'FILL' 1;
+}
+
+.fs-success-text {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #15803D;
+  letter-spacing: 0.1px;
+}
+
+.fs-success-spinner {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid #DCFCE7;
+  border-top-color: #22C55E;
+  animation: fs-spin 700ms linear infinite;
+}
+
+@keyframes fs-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Instruction ─── */
+.fs-instruction {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+}
+.fs-instruction-icon {
+  font-size: 16px;
+  color: var(--md-sys-color-primary, #2563EB);
+  font-variation-settings: 'FILL' 1;
+}
+
+/* ─── Simulate Error (Demo) ─── */
+.fs-simulate-error {
+  background: transparent;
+  border: 1px dashed #D1D5DB;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #9CA3AF;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms;
+}
+.fs-simulate-error:hover { color: #DC2626; border-color: #DC2626; }
+
+/* ─── OR Divider ─── */
+.fs-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+.fs-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--md-sys-color-outline-variant, #E5E7EB);
+}
+.fs-divider-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ─── Alt Button ─── */
+.fs-alt-btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 2px solid var(--md-sys-color-primary, #2563EB);
+  background: transparent;
+  color: var(--md-sys-color-primary, #2563EB);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    background 150ms,
+    transform 180ms cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 150ms;
+}
+.fs-alt-btn:hover {
+  background: #EFF6FF;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.14);
+  transform: translateY(-1px);
+}
+.fs-alt-btn:active { transform: scale(0.97); }
+.fs-alt-icon { font-size: 20px; }
+
+/* ─── Help Card ─── */
+.fs-help-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  background: #EFF6FF;
+  border-radius: 14px;
+  border: 1px solid #BFDBFE;
+  padding: 16px 18px;
+  text-align: left;
+}
+.fs-help-icon {
+  font-size: 24px;
+  color: var(--md-sys-color-primary, #2563EB);
+  font-variation-settings: 'FILL' 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.fs-help-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E40AF;
+}
+.fs-help-desc {
+  margin: 0;
+  font-size: 13px;
+  color: #1E40AF;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ─── Error Dialog Overlay ─── */
+.fs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+  animation: fs-fadein 160ms ease-out both;
+}
+
+.fs-dialog {
+  width: 100%;
+  max-width: 400px;
+  background: var(--md-sys-color-surface, #fff);
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(11,18,32,0.22);
+  animation: fs-dialog-pop 280ms cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes fs-dialog-pop {
+  from { transform: scale(0.88) translateY(16px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.fs-dialog-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #FEF2F2;
+  border: 2px solid #FECACA;
+  display: grid;
+  place-items: center;
+}
+
+.fs-dialog-icon {
+  font-size: 36px;
+  color: #DC2626;
+  font-variation-settings: 'FILL' 1;
+}
+
+.fs-dialog-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface, #0F172A);
+  letter-spacing: -0.2px;
+  text-wrap: balance;
+}
+
+.fs-dialog-body {
+  margin: 0;
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.fs-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-top: 4px;
+}
+
+.fs-dialog-btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    transform 180ms cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 150ms;
+}
+
+.fs-dialog-btn--filled {
+  background: var(--md-sys-color-primary, #2563EB);
+  border: none;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(37,99,235,0.28);
+}
+.fs-dialog-btn--filled:hover {
+  background: #1D4ED8;
+  box-shadow: 0 6px 24px rgba(37,99,235,0.36);
+  transform: translateY(-1px);
+}
+.fs-dialog-btn--filled:active { transform: scale(0.97); }
+.fs-dialog-btn--filled .material-symbols-outlined { font-size: 20px; }
+
+.fs-dialog-btn--outline {
+  background: transparent;
+  border: 2px solid var(--md-sys-color-outline-variant, #E5E7EB);
+  color: var(--md-sys-color-on-surface, #0F172A);
+}
+.fs-dialog-btn--outline:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+.fs-dialog-btn--outline:active { transform: scale(0.97); }

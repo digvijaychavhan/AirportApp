@@ -1,0 +1,532 @@
+/*
+ * Talk to Us — Connecting screen. Airport kiosk.
+ * Extends global M3 tokens + --airport-* roles.
+ * Portrait-first, kiosk-optimized touch targets.
+ */
+
+/* ─── Shell ─── */
+.support {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+/* ─── Top App Bar ─── */
+.support-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--md-sys-color-surface);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  min-height: 72px;
+}
+
+.support-bar-back {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  transition: background 150ms;
+  flex-shrink: 0;
+}
+
+.support-bar-back:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+.support-bar-back:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.support-bar-back md-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.support-bar-titles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.support-bar-title {
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+}
+
+.support-bar-subtitle {
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 2px;
+}
+
+.support-bar-lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 9999px;
+  border: none;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background 150ms;
+  flex-shrink: 0;
+  min-height: 48px;
+}
+
+.support-bar-lang:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+.support-bar-lang:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.support-bar-lang md-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Main scrollable body ─── */
+.support-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 24px 24px;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+/* ─── Connection animation section ─── */
+.support-connect-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.support-connect-heading {
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.support-connect-body {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+/* Circular progress ring + headset */
+.support-ring-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+}
+
+.support-ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: support-spin 1.6s linear infinite;
+}
+
+@keyframes support-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.support-ring-track {
+  fill: none;
+  stroke: var(--md-sys-color-outline-variant);
+  stroke-width: 5;
+}
+
+.support-ring-progress {
+  fill: none;
+  stroke: var(--md-sys-color-primary);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 110;
+}
+
+.support-ring-inner {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  background: var(--md-sys-color-surface);
+  box-shadow: 0 2px 8px rgba(11,18,32,0.08), 0 8px 24px rgba(11,18,32,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.support-ring-icon {
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+  color: var(--md-sys-color-primary);
+  animation: support-pulse 2s ease-in-out infinite;
+}
+
+@keyframes support-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.1); opacity: 0.85; }
+}
+
+/* Three animated dots */
+.support-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.support-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--md-sys-color-primary);
+  animation: support-bounce 1.2s ease-in-out infinite;
+}
+
+.support-dot:nth-child(1) { animation-delay: 0s; }
+.support-dot:nth-child(2) { animation-delay: 0.2s; }
+.support-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes support-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1; }
+}
+
+/* ─── Info card base ─── */
+.support-card {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  background: var(--md-sys-color-surface);
+  box-shadow: 0 1px 2px rgba(11,18,32,0.06), 0 4px 16px rgba(11,18,32,0.05);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Wait time card — blue accent */
+.support-card.wait {
+  border-left: 4px solid var(--md-sys-color-primary);
+  animation: support-fadein 0.4s ease-out both;
+}
+
+@keyframes support-fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Privacy card — slides up */
+.support-card.privacy {
+  animation: support-slideup 0.45s ease-out both;
+  animation-delay: 0.15s;
+}
+
+@keyframes support-slideup {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.support-card-icon-wrap {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.support-card.wait .support-card-icon-wrap {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
+}
+
+.support-card.privacy .support-card-icon-wrap {
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.support-card-icon-wrap md-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.support-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.support-card-label {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.support-card-value {
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+}
+
+.support-card-text {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
+}
+
+.support-privacy-link {
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  padding: 0;
+}
+
+.support-privacy-link:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  border-radius: 2px;
+}
+
+/* ─── Cancel button ─── */
+.support-cancel-wrap {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+.support-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 9999px;
+  border: 2px solid var(--md-sys-color-outline-variant);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 52px;
+  transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.support-cancel-btn:hover {
+  background: var(--md-sys-color-surface-container);
+  border-color: var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface);
+}
+
+.support-cancel-btn:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.support-cancel-btn md-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Error dialog overlay ─── */
+.support-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.48);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  padding: 24px;
+}
+
+.support-dialog {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 24px;
+  background: var(--md-sys-color-surface);
+  box-shadow: 0 8px 32px rgba(11,18,32,0.22);
+  padding: 32px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.support-dialog-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-error);
+  margin-bottom: 4px;
+}
+
+.support-dialog-icon md-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+.support-dialog-title {
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+}
+
+.support-dialog-body {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.support-dialog-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.support-dialog-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--md-sys-color-outline-variant);
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 52px;
+  transition: background 150ms;
+}
+
+.support-dialog-btn:hover {
+  background: var(--md-sys-color-surface-container);
+}
+
+.support-dialog-btn.primary {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.support-dialog-btn.primary:hover {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 88%, black);
+}
+
+.support-dialog-btn:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Bottom navigation ─── */
+.support-nav {
+  display: flex;
+  align-items: stretch;
+  background: var(--md-sys-color-surface);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  padding: 0 0 env(safe-area-inset-bottom);
+}
+
+.support-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 72px;
+  min-width: 48px;
+  transition: color 150ms;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.support-nav-item.is-active {
+  color: var(--md-sys-color-primary);
+}
+
+.support-nav-item:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: -3px;
+}
+
+.support-nav-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 9999px;
+  transition: background 150ms;
+}
+
+.support-nav-item.is-active .support-nav-indicator {
+  background: var(--md-sys-color-primary-container);
+}
+
+.support-nav-indicator md-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.support-nav-label {
+  color: inherit;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+}

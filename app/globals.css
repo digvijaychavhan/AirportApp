@@ -145,3 +145,57 @@ body {
 md-icon {
   font-family: 'Material Symbols Outlined';
 }
+
+/* ─── Shared bottom navigation bar (used across all kiosk screens) ─── */
+.fi-nav {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  background: var(--md-sys-color-surface, #fff);
+  border-top: 1px solid var(--md-sys-color-outline-variant, #E5E7EB);
+  padding: 0 4px;
+  min-height: 72px;
+}
+
+.fi-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 10px 4px;
+  border-radius: 12px;
+  color: var(--md-sys-color-on-surface-variant, #64748B);
+  transition: background 140ms, color 140ms;
+  min-width: 48px;
+}
+
+.fi-nav-item:hover { background: rgba(15, 23, 42, 0.05); }
+.fi-nav-item:active { background: rgba(15, 23, 42, 0.1); }
+
+.fi-nav-item--active {
+  color: var(--md-sys-color-primary, #2563EB);
+}
+
+.fi-nav-item--active .fi-nav-icon {
+  font-variation-settings: 'FILL' 1;
+  background: #EFF6FF;
+  border-radius: 16px;
+  padding: 4px 16px;
+}
+
+.fi-nav-icon {
+  font-size: 24px;
+}
+
+.fi-nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+}

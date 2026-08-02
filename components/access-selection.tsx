@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 type AccessMode = 'elevator' | 'escalator'
 
@@ -55,6 +55,8 @@ function useClock() {
 
 export function AccessSelection() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const flight = searchParams.get('flight')
   const [selected, setSelected] = useState<AccessMode | null>(null)
   const time = useClock()
   const continueRef = useRef<HTMLElement | null>(null)
@@ -63,9 +65,19 @@ export function AccessSelection() {
     setSelected(mode)
   }
 
+  function onBack() {
+    if (flight) {
+      router.push(`/flights/details?flight=${flight}`)
+    } else {
+      router.push('/')
+    }
+  }
+
   function onContinue() {
     if (!selected) return
-    router.push(`/map?mode=${selected}`)
+    const params = new URLSearchParams({ mode: selected })
+    if (flight) params.set('flight', flight)
+    router.push(`/map?${params.toString()}`)
   }
 
   return (
@@ -175,7 +187,7 @@ export function AccessSelection() {
       </main>
 
       <footer className="kiosk-actions">
-        <md-outlined-button onClick={() => router.push('/')}>
+        <md-outlined-button onClick={onBack}>
           <md-icon slot="icon">arrow_back</md-icon>
           Back
         </md-outlined-button>

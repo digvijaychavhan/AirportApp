@@ -162,7 +162,7 @@ export function FlightDetails() {
             type="button"
             className="fd-cta-btn"
             aria-label="Get directions to gate"
-            onClick={() => router.push('/navigation?mode=elevator')}
+            onClick={() => router.push(`/directions?flight=${flight}`)}
           >
             <md-icon>near_me</md-icon>
             Get Directions

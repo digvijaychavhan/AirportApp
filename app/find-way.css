@@ -1,0 +1,220 @@
+/* ================================================================
+   Find Way  —  redesigned to match reference layout
+   ================================================================ */
+
+/* ── Shell ── */
+.fw-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100dvh;
+  background: #F5F7FA;
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+  overflow: hidden;
+}
+
+/* ── Top App Bar ── */
+.fw-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 72px;
+  background: #ffffff;
+  border-bottom: 1px solid #E9EEF4;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+/* Back button — left side, pill style matching reference */
+.fw-bar-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 14px 0 10px;
+  border: 1.5px solid #D1D9E3;
+  border-radius: 20px;
+  background: transparent;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms;
+  flex-shrink: 0;
+}
+.fw-bar-back:hover { background: #F1F5F9; }
+.fw-bar-back .material-symbols-outlined { font-size: 20px; }
+
+/* Center block — absolutely centered so it stays true-center regardless of button widths */
+.fw-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.fw-bar-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  color: #111827;
+  letter-spacing: -0.2px;
+}
+
+.fw-bar-subtitle {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #6B7280;
+  margin: 0;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* EN language selector — right side */
+.fw-bar-lang {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1.5px solid #D1D9E3;
+  border-radius: 18px;
+  background: transparent;
+  color: #374151;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms;
+  flex-shrink: 0;
+}
+.fw-bar-lang:hover { background: #F1F5F9; }
+.fw-bar-lang .material-symbols-outlined { font-size: 18px; }
+
+/* ── Body / scroll area ── */
+.fw-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px 12px;
+}
+
+/* ── 2-column card grid ── */
+.fw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Individual card ── */
+.fw-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 16px;
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.07),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 200ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fw-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 16px rgba(37, 99, 235, 0.13),
+    0 1px 3px rgba(0, 0, 0, 0.07);
+}
+
+.fw-card:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* Photo — fixed height, fills width, no ratio distortion */
+.fw-card-photo {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  background: #E5EBF2;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Info strip */
+.fw-card-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 10px 13px;
+}
+
+/* Circular colored icon */
+.fw-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.fw-card-icon .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.fw-card-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fw-card-title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fw-card-desc {
+  display: block;
+  font-size: 0.69rem;
+  font-weight: 400;
+  color: #6B7280;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+/* Chevron — right edge */
+.fw-card-chevron {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  color: #9CA3AF;
+  transition: color 160ms, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fw-card-chevron .material-symbols-outlined { font-size: 20px; }
+
+.fw-card:hover .fw-card-chevron {
+  color: #2563EB;
+  transform: translateX(3px);
+}
