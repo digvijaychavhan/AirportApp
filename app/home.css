@@ -1,0 +1,535 @@
+/*
+ * Airport Kiosk — Home / Dashboard screen
+ * Full-screen concierge entry point. Portrait-first, high contrast, generous touch targets.
+ */
+
+/* ── Shell ─────────────────────────────────────────────────── */
+.home {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+/* ── Top bar ────────────────────────────────────────────────── */
+.home-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 28px;
+  height: 72px;
+  background: var(--md-sys-color-surface);
+  border-bottom: 1.5px solid #e5e7eb;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.home-bar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.home-bar-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  flex-shrink: 0;
+}
+
+.home-bar-icon md-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.home-bar-titles {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.home-bar-name {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+}
+
+.home-bar-sub {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.home-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.home-clock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-clock md-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--md-sys-color-primary);
+}
+
+.home-lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface-variant);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  transition: background 150ms;
+}
+
+.home-lang:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+.home-lang md-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Scrollable content ─────────────────────────────────────── */
+.home-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Welcome strip ──────────────────────────────────────────── */
+.home-welcome {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.home-welcome-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-greeting {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+}
+
+.home-tagline {
+  color: var(--md-sys-color-on-surface-variant);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
+
+.home-terminal-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 14px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  flex-shrink: 0;
+}
+
+.home-terminal-badge md-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Flight status banner ───────────────────────────────────── */
+.home-flight-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: var(--md-sys-color-surface);
+  border: 1.5px solid #e8edf5;
+  box-shadow: 0 1px 4px rgba(11, 18, 32, 0.06);
+}
+
+.home-flight-seg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.home-flight-label {
+  color: var(--md-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.home-flight-value {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+}
+
+.home-flight-divider {
+  width: 1px;
+  height: 40px;
+  background: #e8edf5;
+  flex-shrink: 0;
+}
+
+.home-flight-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.home-flight-status.status-ontime {
+  background: var(--airport-success-container);
+  color: var(--airport-on-success-container);
+}
+
+.home-flight-status.status-delayed {
+  background: var(--airport-warning-container);
+  color: var(--airport-on-warning-container);
+}
+
+.home-flight-status md-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Section heading ────────────────────────────────────────── */
+.home-section-heading {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── 2 × 2 service cards ────────────────────────────────────── */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.home-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px 24px 24px;
+  min-height: 200px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: #ffffff;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.home-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18), 0 16px 40px rgba(0, 0, 0, 0.14);
+}
+
+.home-card:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
+}
+
+.home-card:active {
+  transform: scale(0.98);
+}
+
+/* Gradients per spec */
+.home-card.card-flight {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.home-card.card-wayfind {
+  background: linear-gradient(135deg, #34d399 0%, #22c55e 100%);
+}
+
+.home-card.card-support {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.home-card.card-feedback {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+.home-card-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+}
+
+.home-card-icon md-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #ffffff;
+}
+
+.home-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.home-card-name {
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.home-card-desc {
+  color: rgba(255, 255, 255, 0.84);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+/* Decorative glow circle */
+.home-card::after {
+  content: '';
+  position: absolute;
+  bottom: -24px;
+  right: -24px;
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+/* Ripple */
+.home-card md-ripple {
+  --md-ripple-pressed-color: rgba(255, 255, 255, 0.28);
+  --md-ripple-hover-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Services row ───────────────────────────────────────────── */
+.home-services {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.home-services::-webkit-scrollbar {
+  display: none;
+}
+
+.home-service-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: var(--md-sys-color-surface);
+  border: 1.5px solid #e8edf5;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  min-width: 88px;
+  transition: background 150ms, transform 150ms;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 1px 3px rgba(11, 18, 32, 0.05);
+}
+
+.home-service-chip:hover {
+  background: var(--md-sys-color-surface-container-low);
+  transform: translateY(-2px);
+}
+
+.home-service-chip:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.home-service-chip md-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: var(--md-sys-color-primary);
+}
+
+.home-service-chip span {
+  color: var(--md-sys-color-on-surface-variant);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ── Bottom navigation bar ──────────────────────────────────── */
+.home-nav {
+  display: flex;
+  align-items: stretch;
+  background: var(--md-sys-color-surface);
+  border-top: 1.5px solid #e8edf5;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+
+.home-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  transition: background 150ms;
+}
+
+.home-nav-item:hover {
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.home-nav-item:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: -3px;
+}
+
+.home-nav-indicator {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 9999px;
+  transition: background 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.home-nav-item.is-active .home-nav-indicator {
+  background: var(--md-sys-color-primary-container);
+}
+
+.home-nav-item md-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  color: #94a3b8;
+  transition: color 200ms;
+}
+
+.home-nav-item.is-active md-icon {
+  color: var(--md-sys-color-primary);
+}
+
+.home-nav-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+  transition: color 200ms;
+}
+
+.home-nav-item.is-active .home-nav-label {
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (min-width: 600px) {
+  .home-cards {
+    gap: 20px;
+  }
+
+  .home-card {
+    min-height: 240px;
+    padding: 32px 28px 28px;
+  }
+
+  .home-card-icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .home-card-icon md-icon {
+    font-size: 38px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (min-width: 840px) {
+  .home-content {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 36px 0 32px;
+  }
+
+  .home-bar {
+    padding: 0 40px;
+  }
+
+  .home-nav {
+    display: none; /* On expanded screens the nav moves to a side rail or top bar */
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .home-card,
+  .home-service-chip,
+  .home-nav-item,
+  .home-nav-indicator {
+    transition: none;
+  }
+}

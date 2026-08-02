@@ -1,0 +1,205 @@
+/* Airport map screen. Reuses kiosk shell tokens. */
+
+.map-canvas {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.map-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.map-summary-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  flex-shrink: 0;
+}
+
+.map-summary-icon md-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.map-summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.map-summary-eta {
+  margin-left: auto;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The stylised map */
+.map-stage {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background:
+    linear-gradient(var(--md-sys-color-surface-container-low), var(--md-sys-color-surface-container-low)),
+    var(--md-sys-color-surface);
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--md-sys-color-outline-variant) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--md-sys-color-outline-variant) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.5;
+}
+
+.map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-route {
+  fill: none;
+  stroke: var(--md-sys-color-primary);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2 16;
+  animation: route-flow 1.2s linear infinite;
+}
+
+@keyframes route-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-route {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.map-pin-badge {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 9999px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(11, 18, 32, 0.25);
+}
+
+.map-pin-badge md-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.map-pin-label {
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  white-space: nowrap;
+}
+
+.pin-start .map-pin-badge {
+  background: var(--md-sys-color-on-surface);
+}
+.pin-access .map-pin-badge {
+  background: var(--airport-purple);
+}
+.pin-dest .map-pin-badge {
+  background: var(--airport-success);
+}
+
+/* Direction steps */
+.map-steps-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.map-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface);
+}
+
+.map-step:last-child {
+  border-bottom: none;
+}
+
+.map-step-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.map-step-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-step-sub {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.map-step-dist {
+  margin-left: auto;
+  color: var(--md-sys-color-on-surface-variant);
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .map-stage {
+    min-height: 420px;
+  }
+}

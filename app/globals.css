@@ -1,0 +1,147 @@
+/* Material Web typescale utility classes (.md-typescale-*) */
+@import '@material/web/typography/md-typescale-styles.css';
+
+/*
+ * Airport kiosk Material 3 light theme.
+ * Source color = Primary Blue #2563EB. High-contrast, calm, premium.
+ * Extra brand roles (success / warning / purple) are exposed as custom
+ * --airport-* tokens, each paired with an on-color for accessible text.
+ */
+:root {
+  color-scheme: light;
+
+  --md-sys-color-primary: #2563eb;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #dbe6ff;
+  --md-sys-color-on-primary-container: #001945;
+  --md-sys-color-secondary: #47536b;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #dae2f4;
+  --md-sys-color-on-secondary-container: #303c53;
+  --md-sys-color-tertiary: #7c3aed;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #ece0ff;
+  --md-sys-color-on-tertiary-container: #250057;
+  --md-sys-color-error: #dc2626;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #f7f9fc;
+  --md-sys-color-on-background: #191c22;
+  --md-sys-color-surface: #ffffff;
+  --md-sys-color-on-surface: #191c22;
+  --md-sys-color-surface-variant: #e2e6ee;
+  --md-sys-color-on-surface-variant: #434955;
+  --md-sys-color-outline: #737885;
+  --md-sys-color-outline-variant: #dbe0ea;
+  --md-sys-color-shadow: #0b1220;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #2e3138;
+  --md-sys-color-inverse-on-surface: #f0f1f7;
+  --md-sys-color-inverse-primary: #adc6ff;
+  --md-sys-color-surface-dim: #d8dbe4;
+  --md-sys-color-surface-bright: #ffffff;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f7f9fc;
+  --md-sys-color-surface-container: #f1f4fa;
+  --md-sys-color-surface-container-high: #eaeef6;
+  --md-sys-color-surface-container-highest: #e4e9f2;
+
+  /* Extra brand roles */
+  --airport-success: #16a34a;
+  --airport-on-success: #ffffff;
+  --airport-success-container: #d3f5df;
+  --airport-on-success-container: #00391b;
+  --airport-warning: #b45309;
+  --airport-on-warning: #ffffff;
+  --airport-warning-container: #ffe2bd;
+  --airport-on-warning-container: #3a2400;
+  --airport-purple: #7c3aed;
+  --airport-on-purple: #ffffff;
+  --airport-purple-container: #ece0ff;
+  --airport-on-purple-container: #250057;
+
+  /* Shape: 16px default corner radius */
+  --md-sys-shape-corner-medium: 16px;
+  --md-sys-shape-corner-large: 20px;
+
+  /* Typefaces: applied to every system and component token */
+  --md-ref-typeface-brand: var(--font-roboto), 'Google Sans', Inter, system-ui, sans-serif;
+  --md-ref-typeface-plain: var(--font-roboto), 'Google Sans', Inter, system-ui, sans-serif;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --md-sys-color-primary: #adc6ff;
+  --md-sys-color-on-primary: #002e6a;
+  --md-sys-color-primary-container: #1d4fb0;
+  --md-sys-color-on-primary-container: #dbe6ff;
+  --md-sys-color-secondary: #bec7dc;
+  --md-sys-color-on-secondary: #283041;
+  --md-sys-color-secondary-container: #3e4759;
+  --md-sys-color-on-secondary-container: #dae2f4;
+  --md-sys-color-tertiary: #d4bbff;
+  --md-sys-color-on-tertiary: #3d1a75;
+  --md-sys-color-tertiary-container: #59319f;
+  --md-sys-color-on-tertiary-container: #ece0ff;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffdad6;
+  --md-sys-color-background: #111318;
+  --md-sys-color-on-background: #e2e2e9;
+  --md-sys-color-surface: #191c22;
+  --md-sys-color-on-surface: #e2e2e9;
+  --md-sys-color-surface-variant: #434955;
+  --md-sys-color-on-surface-variant: #c3c7d2;
+  --md-sys-color-outline: #8d919e;
+  --md-sys-color-outline-variant: #434955;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #e2e2e9;
+  --md-sys-color-inverse-on-surface: #2e3138;
+  --md-sys-color-inverse-primary: #2563eb;
+  --md-sys-color-surface-dim: #111318;
+  --md-sys-color-surface-bright: #373a41;
+  --md-sys-color-surface-container-lowest: #0c0e13;
+  --md-sys-color-surface-container-low: #191c22;
+  --md-sys-color-surface-container: #1d2026;
+  --md-sys-color-surface-container-high: #282a31;
+  --md-sys-color-surface-container-highest: #33353c;
+
+  --airport-success: #7ddba0;
+  --airport-on-success: #00391b;
+  --airport-success-container: #005229;
+  --airport-on-success-container: #99f7ba;
+  --airport-warning: #f5c37a;
+  --airport-on-warning: #3a2400;
+  --airport-warning-container: #6a4300;
+  --airport-on-warning-container: #ffddb3;
+  --airport-purple: #d4bbff;
+  --airport-on-purple: #3d1a75;
+  --airport-purple-container: #59319f;
+  --airport-on-purple-container: #ece0ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  font-family: var(--md-ref-typeface-plain);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Material Symbols icon font for <md-icon> */
+md-icon {
+  font-family: 'Material Symbols Outlined';
+}

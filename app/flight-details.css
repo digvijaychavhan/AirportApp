@@ -1,0 +1,593 @@
+/*
+ * Flight Details screen (Screen 03) — Airport kiosk.
+ * Extends global M3 tokens + --airport-* roles from globals.css.
+ * Kiosk-optimized: large touch targets, high contrast, generous whitespace.
+ */
+
+/* ─── Shell ─── */
+.fd {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+/* ─── Top App Bar ─── */
+.fd-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--md-sys-color-surface);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  min-height: 72px;
+  flex-shrink: 0;
+}
+
+.fd-bar-back {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  transition: background 150ms;
+  flex-shrink: 0;
+}
+
+.fd-bar-back:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+.fd-bar-back:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.fd-bar-back md-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.fd-bar-titles {
+  flex: 1;
+  text-align: center;
+}
+
+.fd-bar-title {
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.fd-bar-subtitle {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.fd-bar-lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 150ms;
+  flex-shrink: 0;
+}
+
+.fd-bar-lang:hover {
+  background: var(--md-sys-color-surface-container);
+}
+
+.fd-bar-lang md-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ─── Scrollable body ─── */
+.fd-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 24px 120px;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ─── Airline Header Card ─── */
+.fd-airline-card {
+  background: var(--md-sys-color-surface);
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(11, 18, 32, 0.07), 0 6px 20px rgba(11, 18, 32, 0.06);
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  margin-bottom: 16px;
+  /* entry animation */
+  animation: fd-slide-up 360ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes fd-slide-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fd-airline-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fd-airline-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #2563eb;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.fd-airline-logo-text {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.fd-airline-name {
+  color: var(--md-sys-color-on-surface);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 3px;
+}
+
+.fd-airline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fd-airline-tag md-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.fd-flight-number-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.fd-flight-number-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.fd-flight-number-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--md-sys-color-primary);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* ─── Flight info card ─── */
+.fd-info-card {
+  background: var(--md-sys-color-surface);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(11, 18, 32, 0.07), 0 6px 20px rgba(11, 18, 32, 0.06);
+  margin-bottom: 16px;
+  animation: fd-slide-up 360ms cubic-bezier(0.2, 0, 0, 1) 60ms both;
+}
+
+.fd-info-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: var(--md-sys-color-on-surface);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.fd-info-card-title md-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--md-sys-color-primary);
+}
+
+/* Two-column grid of info rows */
+.fd-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.fd-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Remove bottom border from last two items (last row) */
+.fd-info-row:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Full-width row (spans both columns) */
+.fd-info-row.fd-full {
+  grid-column: 1 / -1;
+}
+
+.fd-info-row.fd-full:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.fd-info-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--md-sys-color-surface-container-high);
+  flex-shrink: 0;
+}
+
+.fd-info-icon md-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--md-sys-color-primary);
+}
+
+.fd-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.fd-info-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.fd-info-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.2;
+}
+
+/* Status badge variants */
+.fd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.fd-status-badge.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.fd-status-badge.success md-icon {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  color: #16a34a;
+}
+
+.fd-status-badge.ontime {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.fd-status-badge.ontime md-icon {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+}
+
+/* ─── Warning / info card ─── */
+.fd-notice-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #fef3c7;
+  border: 1.5px solid #fcd34d;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  /* staggered entry */
+  animation: fd-slide-up 360ms cubic-bezier(0.2, 0, 0, 1) 200ms both;
+}
+
+.fd-notice-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fde68a;
+  flex-shrink: 0;
+}
+
+.fd-notice-icon md-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  color: #b45309;
+}
+
+.fd-notice-text {
+  flex: 1;
+}
+
+.fd-notice-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #78350f;
+  margin: 0 0 4px;
+}
+
+.fd-notice-body {
+  font-size: 14px;
+  font-weight: 500;
+  color: #92400e;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Primary CTA ─── */
+.fd-cta-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  animation: fd-slide-up 360ms cubic-bezier(0.2, 0, 0, 1) 260ms both;
+}
+
+.fd-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  border-radius: 16px;
+  border: none;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms, box-shadow 150ms, transform 120ms;
+  letter-spacing: 0.01em;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.30);
+}
+
+.fd-cta-btn:hover {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 88%, black);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.38);
+}
+
+.fd-cta-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.18);
+}
+
+.fd-cta-btn:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
+}
+
+.fd-cta-btn md-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* ─── Secondary actions ─── */
+.fd-secondary-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.fd-secondary-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  border-radius: 14px;
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms, color 150ms, transform 100ms;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fd-secondary-btn:hover {
+  background: var(--md-sys-color-surface-container-high);
+  border-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-primary);
+}
+
+.fd-secondary-btn:active {
+  transform: scale(0.97);
+}
+
+.fd-secondary-btn:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.fd-secondary-btn md-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Bottom navigation ─── */
+.fd-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: stretch;
+  background: var(--md-sys-color-surface);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+
+.fd-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 200ms;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 68px;
+}
+
+.fd-nav-item.is-active {
+  color: var(--md-sys-color-primary);
+}
+
+.fd-nav-indicator {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 32px;
+  border-radius: 9999px;
+  background: transparent;
+  transition: background 200ms;
+}
+
+.fd-nav-item.is-active .fd-nav-indicator {
+  background: var(--md-sys-color-primary-container);
+}
+
+.fd-nav-indicator md-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.fd-nav-label {
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─── */
+@media (min-width: 600px) {
+  .fd-body {
+    padding: 32px 40px 120px;
+  }
+
+  .fd-airline-card {
+    padding: 24px 28px;
+  }
+
+  .fd-info-card {
+    padding: 28px;
+  }
+}
+
+@media (min-width: 840px) {
+  .fd-body {
+    padding: 40px 48px 120px;
+  }
+
+  .fd-cta-btn {
+    min-height: 72px;
+    font-size: 20px;
+  }
+
+  .fd-airline-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+  }
+
+  .fd-airline-logo-text {
+    font-size: 20px;
+  }
+
+  .fd-flight-number-value {
+    font-size: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-airline-card,
+  .fd-info-card,
+  .fd-notice-card,
+  .fd-cta-section {
+    animation: none;
+  }
+}

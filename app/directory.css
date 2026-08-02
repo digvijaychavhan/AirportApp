@@ -1,0 +1,543 @@
+/*
+ * Directory List screen — Airport kiosk (Screen 07)
+ * Extends global M3 tokens + --airport-* roles.
+ */
+
+/* ── Shell ── */
+.directory {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+/* ── Top App Bar ── */
+.directory-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--md-sys-color-surface);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  min-height: 72px;
+}
+
+.directory-bar-back {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  transition: background 150ms;
+  flex-shrink: 0;
+}
+.directory-bar-back:hover { background: var(--md-sys-color-surface-container-high); }
+.directory-bar-back:focus-visible { outline: 3px solid var(--md-sys-color-primary); outline-offset: 2px; }
+.directory-bar-back md-icon { font-size: 26px; width: 26px; height: 26px; }
+
+.directory-bar-title {
+  flex: 1;
+  text-align: center;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.directory-bar-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Search bar ── */
+.directory-search-wrap {
+  background: var(--md-sys-color-surface);
+  padding: 16px 24px 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.directory-search-field {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 20px;
+  min-height: 56px;
+  border-radius: 14px;
+  border: 2px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container-low);
+  color: var(--md-sys-color-on-surface);
+  transition: border-color 200ms, box-shadow 200ms;
+  cursor: text;
+}
+.directory-search-field:focus-within {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  background: var(--md-sys-color-surface);
+}
+.directory-search-field md-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  color: var(--md-sys-color-on-surface-variant);
+  flex-shrink: 0;
+}
+.directory-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+  min-width: 0;
+}
+.directory-search-input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 400;
+}
+.directory-search-clear {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--md-sys-color-on-surface-variant);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  transition: background 150ms;
+}
+.directory-search-clear:hover { background: var(--md-sys-color-surface-container-high); }
+.directory-search-clear md-icon { font-size: 18px; width: 18px; height: 18px; }
+
+/* ── Category filter chips ── */
+.directory-filters {
+  background: var(--md-sys-color-surface);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  padding: 0 16px 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.directory-filters::-webkit-scrollbar { display: none; }
+.directory-filters-row {
+  display: flex;
+  gap: 10px;
+  padding-top: 12px;
+  white-space: nowrap;
+}
+
+.directory-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container-low);
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 180ms, background 180ms, color 180ms, transform 100ms;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.directory-filter-chip md-icon { font-size: 18px; width: 18px; height: 18px; }
+.directory-filter-chip:hover {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+.directory-filter-chip:active { transform: scale(0.95); }
+.directory-filter-chip:focus-visible { outline: 3px solid var(--md-sys-color-primary); outline-offset: 2px; }
+.directory-filter-chip.is-active {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+.directory-filter-chip.is-active md-icon { color: var(--md-sys-color-on-primary); }
+
+/* Sort toggle */
+.directory-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms;
+  white-space: nowrap;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.directory-sort-btn md-icon { font-size: 18px; width: 18px; height: 18px; }
+.directory-sort-btn:hover { background: var(--md-sys-color-surface-container); }
+
+/* ── Results summary bar ── */
+.directory-results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 8px;
+  gap: 8px;
+}
+.directory-results-count {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 14px;
+  font-weight: 500;
+}
+.directory-results-sort {
+  color: var(--md-sys-color-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Scrollable body ── */
+.directory-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 20px 120px;
+}
+
+/* ── Category hero banner ── */
+.directory-hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--md-sys-color-primary-container);
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.directory-hero-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  flex-shrink: 0;
+}
+.directory-hero-icon md-icon { font-size: 32px; width: 32px; height: 32px; }
+.directory-hero-text h2 {
+  margin: 0 0 4px;
+  color: var(--md-sys-color-on-primary-container);
+  font-weight: 700;
+}
+.directory-hero-text p {
+  margin: 0;
+  color: var(--md-sys-color-on-primary-container);
+  opacity: 0.75;
+  font-size: 14px;
+}
+
+/* ── Floor section heading ── */
+.directory-floor-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 4px 10px;
+}
+.directory-floor-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.directory-floor-label {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Facility card ── */
+.directory-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--md-sys-color-surface);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(11,18,32,0.06), 0 4px 16px rgba(11,18,32,0.05);
+  margin-bottom: 14px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 180ms, transform 120ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.directory-card:hover {
+  box-shadow: 0 3px 8px rgba(11,18,32,0.10), 0 8px 24px rgba(11,18,32,0.09);
+}
+.directory-card:active { transform: scale(0.99); }
+.directory-card:focus-visible { outline: 3px solid var(--md-sys-color-primary); outline-offset: 2px; }
+
+/* Left accent stripe by category color */
+.directory-card-stripe {
+  width: 6px;
+  flex-shrink: 0;
+  border-radius: 0;
+  background: var(--stripe-color, var(--md-sys-color-primary));
+}
+
+/* Icon tile */
+.directory-card-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  flex-shrink: 0;
+  margin: 20px 4px 20px 18px;
+}
+.directory-card-icon md-icon { font-size: 30px; width: 30px; height: 30px; }
+
+/* Content */
+.directory-card-content {
+  flex: 1;
+  padding: 18px 12px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.directory-card-name {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 17px;
+}
+.directory-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.directory-card-type {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 13px;
+  font-weight: 500;
+}
+.directory-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.directory-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.directory-card-tag md-icon { font-size: 13px; width: 13px; height: 13px; }
+
+/* Status badge */
+.directory-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.directory-status.open {
+  background: #dcfce7;
+  color: #15803d;
+}
+.directory-status.closed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.directory-status.soon {
+  background: #fef9c3;
+  color: #a16207;
+}
+.directory-status md-icon { font-size: 13px; width: 13px; height: 13px; }
+
+/* Right side */
+.directory-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 18px 18px 18px 8px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.directory-card-distance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--md-sys-color-primary);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.directory-card-distance md-icon { font-size: 16px; width: 16px; height: 16px; }
+.directory-card-arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
+}
+.directory-card-arrow md-icon { font-size: 20px; width: 20px; height: 20px; }
+
+/* Featured card (promoted / highlight) */
+.directory-card.is-featured {
+  border: 2px solid var(--md-sys-color-primary);
+}
+.directory-card.is-featured .directory-card-stripe {
+  background: var(--md-sys-color-primary);
+}
+.directory-featured-badge {
+  position: absolute;
+  top: 14px;
+  right: 52px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.directory-featured-badge md-icon { font-size: 12px; width: 12px; height: 12px; }
+
+/* ── Empty state ── */
+.directory-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 72px 32px;
+  text-align: center;
+}
+.directory-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.directory-empty-icon md-icon { font-size: 44px; width: 44px; height: 44px; }
+.directory-empty h3 { margin: 0; color: var(--md-sys-color-on-surface); }
+.directory-empty p { margin: 0; color: var(--md-sys-color-on-surface-variant); max-width: 28ch; }
+
+/* ── Bottom navigation ── */
+.directory-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: stretch;
+  background: var(--md-sys-color-surface);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+.directory-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 200ms;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 68px;
+}
+.directory-nav-item.is-active { color: var(--md-sys-color-primary); }
+.directory-nav-indicator {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 32px;
+  border-radius: 9999px;
+  background: transparent;
+  transition: background 200ms;
+}
+.directory-nav-item.is-active .directory-nav-indicator {
+  background: var(--md-sys-color-primary-container);
+}
+.directory-nav-indicator md-icon { font-size: 22px; width: 22px; height: 22px; }
+.directory-nav-label { font-size: 11px; font-weight: 500; white-space: nowrap; }
+
+/* ── Responsive ── */
+@media (min-width: 600px) {
+  .directory-body { padding: 16px 32px 120px; }
+  .directory-card-name { font-size: 18px; }
+}
+@media (min-width: 840px) {
+  .directory-body { padding: 20px 48px 120px; }
+  .directory-card-icon { width: 72px; height: 72px; }
+  .directory-card-icon md-icon { font-size: 34px; width: 34px; height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .directory-card { transition: none; }
+  .directory-filter-chip { transition: none; }
+}
