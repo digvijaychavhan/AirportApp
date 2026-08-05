@@ -31,7 +31,7 @@ const SERVICES = [
   { icon: 'local_atm',        label: 'Currency',  category: 'finance'   },
   { icon: 'wifi',             label: 'Wi-Fi',     category: 'wifi'      },
   { icon: 'luggage',          label: 'Baggage',   category: 'services'  },
-  { icon: 'restaurant',       label: 'Dining',    category: 'dining'    },
+  { icon: 'restaurant',       label: 'Dining',    category: 'eat-dine'  },
   { icon: 'shopping_bag',     label: 'Shopping',  category: 'shopping'  },
   { icon: 'local_taxi',       label: 'Taxi',      category: 'services'  },
   { icon: 'hotel',            label: 'Lounges',   category: 'lounge'    },
@@ -269,7 +269,7 @@ export function HomeScreen() {
                 type="button"
                 className="home-service-chip"
                 aria-label={svc.label}
-                onClick={() => router.push(`/directory?category=${svc.category}`)}
+                onClick={() => router.push(svc.category === 'eat-dine' ? '/eat-dine' : `/directory?category=${svc.category}`)}
               >
                 <md-icon>{svc.icon}</md-icon>
                 <span>{svc.label}</span>

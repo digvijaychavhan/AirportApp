@@ -43,7 +43,7 @@ const CATEGORIES: Category[] = [
     icon: 'restaurant',
     iconColor: '#D97706',
     iconBg: '#FEF3C7',
-    route: '/wayfinding/dining',
+    route: '/eat-dine',
   },
   {
     id: 'services',
